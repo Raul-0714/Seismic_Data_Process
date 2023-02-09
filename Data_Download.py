@@ -19,6 +19,14 @@ client = Client("IRIS")
 # Loop over networks and download data
 st = None
 for network in networks:
+    # Get list of stations for each network
+    inventory = client.get_stations(network=network, starttime=starttime, endtime=endtime)
+    stations = [station.code for network in inventory for station in network]
+    print("Network:", network)
+    print("Stations:", stations)
+    print("Number of Stations:", len(stations))
+    print("")
+
     st_temp = client.get_waveforms(network, station, "*", component, starttime, endtime)
     if st is None:
         st = st_temp
